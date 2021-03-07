@@ -10,12 +10,14 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "multer": "^1.4.2",
     "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.31"
   },
   "devDependencies": {
     "@types/express": "^4.17.11",
+    "@types/multer": "^1.4.5",
     "@typescript-eslint/eslint-plugin": "^4.16.1",
     "@typescript-eslint/parser": "^4.16.1",
     "eslint": "^7.21.0",

@@ -4,7 +4,9 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import Showcase from './Showcase';
 
 @Entity('products')
 class Product {
@@ -28,6 +30,9 @@ class Product {
 
   @Column()
   price: number;
+
+  @OneToMany(() => Showcase, showcase => showcase.product_id)
+  showcases: Showcase[];
 
   @CreateDateColumn()
   created_at: Date;

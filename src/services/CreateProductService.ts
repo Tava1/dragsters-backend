@@ -1,6 +1,13 @@
 import { getRepository } from 'typeorm';
 
 import Product from '../models/Product';
+import Showcase from '../models/Showcase';
+
+interface RequestShowcase {
+  filename: string;
+  path: string;
+  product_id?: string;
+}
 
 interface Request {
   product_name: string;
@@ -9,6 +16,7 @@ interface Request {
   status: boolean;
   supply: number;
   price: number;
+  showcase: RequestShowcase[];
 }
 
 class CreateProductService {
@@ -19,10 +27,11 @@ class CreateProductService {
     status,
     supply,
     price,
+    showcase,
   }: Request): Promise<Product> {
     const productRepository = getRepository(Product);
 
-    const product = productRepository.create({
+    const newProduct = productRepository.create({
       product_name,
       product_fullname,
       stars,
@@ -31,11 +40,27 @@ class CreateProductService {
       price,
     });
 
-    console.log(product);
+    const productData = await productRepository.save(newProduct);
 
-    await productRepository.save(product);
+    const showcaseRepository = getRepository(Showcase);
 
-    return product;
+    showcase.map((showcaseInfo: any) => {
+      showcaseInfo.product_id = productData.product_id;
+      return showcaseInfo;
+    });
+
+    const newShowcases = showcaseRepository.create(
+      showcase.map(sc => ({
+        filename: sc.filename,
+        path: sc.path,
+        thumbnail: false,
+        product_id: sc.product_id,
+      })),
+    );
+
+    await showcaseRepository.save(newShowcases);
+
+    return productData;
   }
 }
 
