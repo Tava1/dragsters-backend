@@ -1,76 +1,50 @@
 import { Router } from 'express';
+import { celebrate, Joi, Segments } from 'celebrate';
 import multer from 'multer';
-import { getRepository } from 'typeorm';
 import uploadConfig from '../config/upload';
-
-import Product from '../models/Product';
-
-import CreateProductService from '../services/CreateProductService';
+import productController from '../controller/ProductController';
 
 const productsRouter = Router();
 const upload = multer(uploadConfig);
 
-interface RequestFiles {
-  filename: string;
-  path: string;
-}
+productsRouter.get('/', productController.read);
 
-// TODO: Listar todos os produtos
-productsRouter.get('/', async (request, response) => {
-  const productsRepository = getRepository(Product);
+// TODO: Capturar os dados de um produto para a tela de detalhe
+productsRouter.get('/:id', productController.detail);
 
-  const products = await productsRepository.find();
-
-  return response.json(products);
-});
-
-// TODO: Criar produto com imagem
 productsRouter.post(
   '/',
   upload.array('showcase'),
-  async (request, response) => {
-    const {
-      product_name,
-      product_fullname,
-      stars,
-      status,
-      supply,
-      price,
-    } = request.body;
-
-    const { files } = request;
-
-    const showcase: Array<RequestFiles> = [];
-
-    function getFiles(myFiles: any) {
-      myFiles.map((file: any) => {
-        return showcase.push({
-          filename: file.filename,
-          path: file.destination,
-        });
-      });
-    }
-
-    getFiles(files);
-
-    const createProduct = new CreateProductService();
-
-    try {
-      const product = await createProduct.execute({
-        product_name,
-        product_fullname,
-        stars,
-        status,
-        supply,
-        price,
-        showcase,
-      });
-
-      return response.json(product);
-    } catch (error) {
-      return response.json(error);
-    }
-  },
+  celebrate({
+    [Segments.BODY]: Joi.object().keys({
+      product_name: Joi.string().required().min(3).max(280),
+      product_fullname: Joi.string().required().min(3).max(2000),
+      stars: Joi.number().required().integer(),
+      status: Joi.boolean().required(),
+      supply: Joi.number().required().integer(),
+      price: Joi.number().precision(2).required(),
+    }),
+  }),
+  productController.create,
 );
+
+productsRouter.put(
+  '/:id',
+  celebrate({
+    [Segments.BODY]: Joi.object().keys({
+      product_name: Joi.string().required().min(3).max(280),
+      product_fullname: Joi.string().required().min(3).max(2000),
+      stars: Joi.number().required().integer(),
+      status: Joi.boolean().required(),
+      supply: Joi.number().required().integer(),
+      price: Joi.number().precision(2).required(),
+    }),
+  }),
+  productController.update,
+);
+
+productsRouter.patch('/:id/status', productController.updateStatus);
+
+// productsRouter.patch('/:id/images', productController.updateShowcase);
 
 export default productsRouter;
