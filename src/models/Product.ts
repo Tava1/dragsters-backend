@@ -20,6 +20,12 @@ class Product {
   product_fullname: string;
 
   @Column()
+  brand: string;
+
+  @Column()
+  description: string;
+
+  @Column()
   stars: number;
 
   @Column()

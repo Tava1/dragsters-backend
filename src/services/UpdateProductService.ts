@@ -7,6 +7,8 @@ interface Request {
   product_id: string;
   product_name: string;
   product_fullname: string;
+  brand: string;
+  description: string;
   stars: number;
   status: boolean;
   supply: number;
@@ -18,6 +20,8 @@ class UpdateProductService {
     product_id,
     product_name,
     product_fullname,
+    brand,
+    description,
     stars,
     status,
     supply,
@@ -30,6 +34,8 @@ class UpdateProductService {
     if (product) {
       product.product_name = product_name;
       product.product_fullname = product_fullname;
+      product.brand = brand;
+      product.description = description;
       product.stars = stars;
       product.status = status;
       product.supply = supply;

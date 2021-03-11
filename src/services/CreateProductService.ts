@@ -12,6 +12,8 @@ interface RequestShowcase {
 interface Request {
   product_name: string;
   product_fullname: string;
+  brand: string;
+  description: string;
   stars: number;
   status: boolean;
   supply: number;
@@ -23,6 +25,8 @@ class CreateProductService {
   public async execute({
     product_name,
     product_fullname,
+    brand,
+    description,
     stars,
     status,
     supply,
@@ -34,6 +38,8 @@ class CreateProductService {
     const newProduct = productRepository.create({
       product_name,
       product_fullname,
+      brand,
+      description,
       stars,
       status,
       supply,
