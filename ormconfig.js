@@ -1,11 +1,12 @@
-{
-  "name": "default",
+module.exports = {
+  "url": process.env.DB_URL,
   "type": "postgres",
-  "host": "localhost",
-  "post": 5432,
-  "username": "postgres",
-  "password": "docker",
-  "database": "dragsters",
+  "ssl": true,
+  "extra": {
+    "ssl": {
+      "rejectUnauthorized": false
+    }
+  },
   "entities": [
     "./src/models/*.ts"
   ],
