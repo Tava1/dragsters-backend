@@ -19,7 +19,9 @@ productsRouter.post(
     [Segments.BODY]: Joi.object().keys({
       product_name: Joi.string().required().min(3).max(280),
       product_fullname: Joi.string().required().min(3).max(2000),
-      stars: Joi.number().required().integer(),
+      brand: Joi.string().required().min(3).max(20),
+      description: Joi.string().required().min(3).max(2000),
+      stars: Joi.number(),
       status: Joi.boolean().required(),
       supply: Joi.number().required().integer(),
       price: Joi.number().precision(2).required(),
@@ -28,13 +30,21 @@ productsRouter.post(
   productController.create,
 );
 
+productsRouter.post(
+  '/images/:id',
+  upload.array('showcase'),
+  productController.createImages,
+);
+
 productsRouter.put(
   '/:id',
   celebrate({
     [Segments.BODY]: Joi.object().keys({
       product_name: Joi.string().required().min(3).max(280),
       product_fullname: Joi.string().required().min(3).max(2000),
-      stars: Joi.number().required().integer(),
+      brand: Joi.string().required().min(3).max(20),
+      description: Joi.string().required().min(3).max(2000),
+      stars: Joi.number(),
       status: Joi.boolean().required(),
       supply: Joi.number().required().integer(),
       price: Joi.number().precision(2).required(),
@@ -43,7 +53,7 @@ productsRouter.put(
   productController.update,
 );
 
-productsRouter.patch('/:id/status', productController.updateStatus);
+productsRouter.patch('/:id/:setStatus/', productController.updateStatus);
 
 // productsRouter.patch('/:id/images', productController.updateShowcase);
 
