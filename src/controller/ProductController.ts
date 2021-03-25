@@ -33,29 +33,6 @@ const productController = {
       price,
     } = request.body;
 
-    const { files } = request;
-
-    const showcase: Array<RequestFiles> = [];
-
-    function getFiles(myFiles: any) {
-      myFiles.map((file: any) => {
-        return showcase.push({
-          filename: file.filename,
-          path: file.destination,
-        });
-      });
-    }
-
-    if (files) {
-      getFiles(files);
-    }
-    // else {
-    //   return response.status(400).json({
-    //     Error:
-    //       'Não foi possível cadastrar um novo produto, é necessário enviar ao menos 1 imagem.',
-    //   });
-    // }
-
     const createProduct = new CreateProductService();
 
     try {
@@ -68,7 +45,6 @@ const productController = {
         status,
         supply,
         price,
-        showcase,
       });
 
       return response.status(201).json(product);
@@ -126,7 +102,7 @@ const productController = {
   },
 
   async update(request: Request, response: Response): Promise<Product | any> {
-    const { product_id } = request.params;
+    const { id } = request.params;
     const {
       product_name,
       product_fullname,
@@ -141,7 +117,7 @@ const productController = {
     const updateProductService = new UpdateProductService();
 
     const productUpdated = await updateProductService.execute({
-      product_id,
+      product_id: id,
       product_name,
       product_fullname,
       brand,

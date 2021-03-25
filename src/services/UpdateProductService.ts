@@ -1,5 +1,4 @@
-import { response } from 'express';
-import { getRepository } from 'typeorm';
+import { getRepository, createQueryBuilder } from 'typeorm';
 
 import Product from '../models/Product';
 
@@ -26,27 +25,29 @@ class UpdateProductService {
     status,
     supply,
     price,
-  }: Request): Promise<Product | null> {
-    const productRepository = getRepository(Product);
+  }: Request): Promise<Product | void> {
+    const queryBuilder = createQueryBuilder(Product);
 
-    const product = await productRepository.findOne(product_id);
+    console.log(product_id);
 
-    if (product) {
-      product.product_name = product_name;
-      product.product_fullname = product_fullname;
-      product.brand = brand;
-      product.description = description;
-      product.stars = stars;
-      product.status = status;
-      product.supply = supply;
-      product.price = price;
-
-      const updatedProduct = await productRepository.save(product);
-
-      return updatedProduct;
+    try {
+      const result = await queryBuilder
+        .update(Product)
+        .set({
+          product_name,
+          product_fullname,
+          brand,
+          description,
+          status,
+          supply,
+          price,
+        })
+        .where({ product_id })
+        .execute();
+      console.log(result);
+    } catch (error) {
+      console.log(error);
     }
-
-    return null;
   }
 }
 

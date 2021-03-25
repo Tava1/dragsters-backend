@@ -1,12 +1,10 @@
-module.exports = {
-  "url": process.env.DB_URL,
+{
   "type": "postgres",
-  "ssl": true,
-  "extra": {
-    "ssl": {
-      "rejectUnauthorized": false
-    }
-  },
+  "host": "localhost",
+  "post": 5432,
+  "username": "postgres",
+  "password": "docker",
+  "database": "dragsters",
   "entities": [
     "./src/models/*.ts"
   ],
