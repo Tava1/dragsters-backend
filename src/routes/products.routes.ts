@@ -14,7 +14,6 @@ productsRouter.get('/:id', productController.detail);
 
 productsRouter.post(
   '/',
-  upload.array('showcase'),
   celebrate({
     [Segments.BODY]: Joi.object().keys({
       product_name: Joi.string().required().min(3).max(280),
