@@ -4,7 +4,11 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
+
+import Product from './Product';
 
 @Entity('showcases')
 class Showcase {
@@ -22,6 +26,10 @@ class Showcase {
 
   @Column()
   product_id: string;
+
+  @ManyToOne(() => Product, product => product.product_id)
+  @JoinColumn({ name: 'product_id' })
+  product: Product;
 
   @CreateDateColumn()
   created_at: Date;

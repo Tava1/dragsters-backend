@@ -5,7 +5,7 @@ import Showcase from '../models/Showcase';
 interface Request {
   product_id: string;
   filenames: [];
-  path: string;
+  paths: [];
   thumbnail: boolean;
 }
 
@@ -13,19 +13,21 @@ class CreateShowcaseService {
   public async execute({
     product_id,
     filenames,
-    path,
+    paths,
     thumbnail,
   }: Request): Promise<Showcase | Array<Showcase>> {
     const showcaseRepository = getRepository(Showcase);
 
     const newShowcases = showcaseRepository.create(
-      filenames.map(filename => ({
+      paths.map(path => ({
         product_id,
-        filename,
+        filename: 'none',
         path,
         thumbnail,
       })),
     );
+
+    console.log(newShowcases);
 
     const showcaseData = await showcaseRepository.save(newShowcases);
 

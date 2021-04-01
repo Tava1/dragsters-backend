@@ -37,7 +37,7 @@ class Product {
   @Column()
   price: number;
 
-  @OneToMany(() => Showcase, showcase => showcase.product_id)
+  @OneToMany(() => Showcase, showcase => showcase.product)
   showcases: Showcase[];
 
   @CreateDateColumn()

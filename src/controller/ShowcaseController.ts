@@ -14,9 +14,7 @@ const showcaseController = {
   },
 
   async create(request: Request, response: Response): Promise<Showcase | any> {
-    const { product_id, filenames, path, thumbnail } = request.body;
-
-    console.log(request.body);
+    const { product_id, filenames, paths, thumbnail } = request.body;
 
     const createShowcase = new CreateShowcaseService();
 
@@ -24,7 +22,7 @@ const showcaseController = {
       const showcase = await createShowcase.execute({
         product_id,
         filenames,
-        path,
+        paths,
         thumbnail,
       });
 
