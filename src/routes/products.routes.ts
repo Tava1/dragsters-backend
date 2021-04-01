@@ -9,7 +9,6 @@ const upload = multer(uploadConfig);
 
 productsRouter.get('/', productController.read);
 
-// TODO: Capturar os dados de um produto para a tela de detalhe
 productsRouter.get('/:id', productController.detail);
 
 productsRouter.post(
@@ -53,7 +52,5 @@ productsRouter.put(
 );
 
 productsRouter.patch('/:id/:setStatus/', productController.updateStatus);
-
-// productsRouter.patch('/:id/images', productController.updateShowcase);
 
 export default productsRouter;

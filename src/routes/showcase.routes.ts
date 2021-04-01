@@ -12,7 +12,7 @@ showcaseRouter.post(
     [Segments.BODY]: Joi.object().keys({
       product_id: Joi.string().required(),
       filenames: Joi.array().required(),
-      path: Joi.string().required(),
+      paths: Joi.array().required(),
       thumbnail: Joi.boolean().required(),
     }),
   }),

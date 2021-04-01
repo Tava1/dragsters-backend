@@ -16,9 +16,11 @@ const productController = {
   async read(request: Request, response: Response): Promise<Product | any> {
     const productsRepository = getRepository(Product);
 
-    const products = await productsRepository.find();
+    const productsWithShowcase = await productsRepository.find({
+      relations: ['showcases'],
+    });
 
-    return response.json(products);
+    return response.json(productsWithShowcase);
   },
 
   async create(request: Request, response: Response): Promise<Product | any> {
