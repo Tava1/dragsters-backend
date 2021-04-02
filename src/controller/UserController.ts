@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { getRepository, createQueryBuilder } from 'typeorm';
+import { hash } from 'bcryptjs';
 
 import User from '../models/User';
 
@@ -71,13 +72,15 @@ const userController = {
     const { id } = request.params;
     const { fullname, password, role, status } = request.body;
 
+    const cryptedPassword = await hash(password, 8);
+
     try {
       const user = await getRepository(User)
         .createQueryBuilder('users')
         .update(User)
         .set({
           fullname,
-          password,
+          password: cryptedPassword,
           status,
           role,
         })
