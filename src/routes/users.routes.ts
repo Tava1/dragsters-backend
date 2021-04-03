@@ -1,8 +1,11 @@
 import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
 import userController from '../controller/UserController';
+import systemUserAuthenticated from '../middlewares/systemUserAuthenticated';
 
 const usersRouter = Router();
+
+usersRouter.use(systemUserAuthenticated);
 
 // http://localhost:3333/users?offset=0&limit=10
 usersRouter.get('/', userController.read);
