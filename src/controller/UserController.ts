@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { getRepository, createQueryBuilder } from 'typeorm';
+import { hash } from 'bcryptjs';
 
 import User from '../models/User';
 
@@ -39,6 +40,11 @@ const userController = {
   },
 
   async create(request: Request, response: Response): Promise<User | any> {
+    if (!request.user.isAdmin)
+      return response.json({
+        message: 'Usuário não possuí autorização para esta tarefa.',
+      });
+
     const { fullname, email, password, role } = request.body;
 
     const createUser = new CreateUserService();
@@ -68,8 +74,15 @@ const userController = {
   },
 
   async update(request: Request, response: Response): Promise<User | any> {
+    if (!request.user.isAdmin)
+      return response.json({
+        message: 'Usuário não possuí autorização para esta tarefa.',
+      });
+
     const { id } = request.params;
     const { fullname, password, role, status } = request.body;
+
+    const cryptedPassword = await hash(password, 8);
 
     try {
       const user = await getRepository(User)
@@ -77,7 +90,7 @@ const userController = {
         .update(User)
         .set({
           fullname,
-          password,
+          password: cryptedPassword,
           status,
           role,
         })
@@ -94,6 +107,11 @@ const userController = {
     request: Request,
     response: Response,
   ): Promise<User | any> {
+    if (!request.user.isAdmin)
+      return response.json({
+        message: 'Usuário não possuí autorização para esta tarefa.',
+      });
+
     const { id, setStatus } = request.params;
 
     const queryBuilder = await createQueryBuilder(User);
@@ -103,9 +121,9 @@ const userController = {
     try {
       await queryBuilder.update(User).set({ status }).where({ id }).execute();
 
-      response.status(200).json({ status });
+      return response.status(200).json({ status });
     } catch (error) {
-      response.json({ error });
+      return response.json({ error });
     }
   },
 
