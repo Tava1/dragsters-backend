@@ -70,7 +70,7 @@ Após a instalação das depências, podemos utilizar alguns comando disponívei
 ### :construction: Ambiente de desenvolvimento
 Iniciar um ambiente de desenvolvimento local.
 ```BASH
-yarn dev
+yarn dev:server
 ```
 
 ### :wrench: Build do projeto
