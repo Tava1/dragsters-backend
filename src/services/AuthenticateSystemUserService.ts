@@ -9,8 +9,18 @@ interface Request {
   password: string;
 }
 
+interface UserResponse {
+  id: string;
+  fullname: string;
+  email: string;
+  status: boolean;
+  role: string;
+  created_at: Date;
+  updated_at: Date;
+}
+
 interface Response {
-  user: User;
+  user: UserResponse;
   token: string;
 }
 
@@ -47,7 +57,17 @@ class AuthenticateSystemUserService {
       },
     );
 
-    return { user, token };
+    const userWithoutPassword = {
+      id: user.id,
+      fullname: user.fullname,
+      email: user.email,
+      status: user.status,
+      role: user.role,
+      created_at: user.created_at,
+      updated_at: user.updated_at,
+    };
+
+    return { user: userWithoutPassword, token };
   }
 }
 
