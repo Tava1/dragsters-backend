@@ -18,6 +18,10 @@ const userController = {
         .take(Number(limit === undefined ? (limit = '10') : limit))
         .getMany();
 
+      const total = await getRepository(User)
+        .createQueryBuilder('users')
+        .getCount();
+
       const usersWithoutPassword = users.map(user => ({
         id: user.id,
         fullname: user.fullname,
@@ -31,6 +35,7 @@ const userController = {
       const resquestInfo = {
         offset,
         limit,
+        total,
       };
 
       return response.json({ usersWithoutPassword, resquestInfo });
@@ -80,24 +85,51 @@ const userController = {
       });
 
     const { id } = request.params;
-    const { fullname, password, role, status } = request.body;
-
-    const cryptedPassword = await hash(password, 8);
+    const { fullname, role, status } = request.body;
 
     try {
-      const user = await getRepository(User)
+      const result = await getRepository(User)
         .createQueryBuilder('users')
         .update(User)
         .set({
           fullname,
-          password: cryptedPassword,
           status,
           role,
         })
         .where('id = :id', { id })
         .execute();
 
-      return response.json(user);
+      return response.status(200).json(result);
+    } catch (error) {
+      return response.json(error);
+    }
+  },
+
+  async updatePassword(
+    request: Request,
+    response: Response,
+  ): Promise<User | any> {
+    if (!request.user.isAdmin)
+      return response.json({
+        message: 'Usuário não possuí autorização para esta tarefa.',
+      });
+
+    const { id } = request.params;
+    const { password } = request.body;
+
+    const cryptedPassword = await hash(password, 8);
+
+    try {
+      const result = await getRepository(User)
+        .createQueryBuilder('users')
+        .update(User)
+        .set({
+          password: cryptedPassword,
+        })
+        .where('id = :id', { id })
+        .execute();
+
+      return response.status(200).json(result);
     } catch (error) {
       return response.json(error);
     }
@@ -112,11 +144,12 @@ const userController = {
         message: 'Usuário não possuí autorização para esta tarefa.',
       });
 
-    const { id, setStatus } = request.params;
+    const { id } = request.params;
+    const { setStatus } = request.body;
 
     const queryBuilder = await createQueryBuilder(User);
 
-    const status = setStatus === 'true';
+    const status = setStatus === true;
 
     try {
       await queryBuilder.update(User).set({ status }).where({ id }).execute();

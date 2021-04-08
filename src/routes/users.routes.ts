@@ -30,7 +30,6 @@ usersRouter.put(
   celebrate({
     [Segments.BODY]: Joi.object().keys({
       fullname: Joi.string().min(5).required(),
-      password: Joi.string().min(3).required(),
       role: Joi.string().required(),
       status: Joi.boolean(),
     }),
@@ -38,6 +37,16 @@ usersRouter.put(
   userController.update,
 );
 
-usersRouter.patch('/:id/:setStatus/', userController.updateStatus);
+usersRouter.patch(
+  '/password/:id/',
+  celebrate({
+    [Segments.BODY]: Joi.object().keys({
+      password: Joi.string().min(3).required(),
+    }),
+  }),
+  userController.updatePassword,
+);
+
+usersRouter.patch('/status/:id/', userController.updateStatus);
 
 export default usersRouter;
