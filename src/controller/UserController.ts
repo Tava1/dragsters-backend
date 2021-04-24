@@ -40,7 +40,7 @@ const userController = {
 
       return response.json({ usersWithoutPassword, resquestInfo });
     } catch (error) {
-      return response.json(error);
+      return response.status(400).json(error);
     }
   },
 
@@ -74,7 +74,7 @@ const userController = {
 
       return response.status(201).json(userWithoutPassword);
     } catch (error) {
-      return response.json(error);
+      return response.status(400).json(error);
     }
   },
 
@@ -101,7 +101,7 @@ const userController = {
 
       return response.status(200).json(result);
     } catch (error) {
-      return response.json(error);
+      return response.status(400).json(error);
     }
   },
 
@@ -131,7 +131,7 @@ const userController = {
 
       return response.status(200).json(result);
     } catch (error) {
-      return response.json(error);
+      return response.status(400).json(error);
     }
   },
 
@@ -156,7 +156,7 @@ const userController = {
 
       return response.status(200).json({ status });
     } catch (error) {
-      return response.json({ error });
+      return response.status(400).json(error);
     }
   },
 
@@ -186,7 +186,7 @@ const userController = {
 
       return response.status(200).json(userWithoutPassword);
     } catch (error) {
-      return response.json(error);
+      return response.status(400).json(error);
     }
   },
 };
