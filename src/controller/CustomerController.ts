@@ -6,7 +6,7 @@ import Customer from '../models/Customer';
 import CreateCustomerService from '../services/CreateCustomerService';
 
 const customerController = {
-  async read(resquest: Request, response: Response): Promise<Customer | any> {
+  async read(request: Request, response: Response): Promise<Customer | any> {
     try {
       const customersRepository = getRepository(Customer);
 
@@ -20,8 +20,8 @@ const customerController = {
     }
   },
 
-  async create(resquest: Request, response: Response): Promise<Customer | any> {
-    const { customer, address } = resquest.body;
+  async create(request: Request, response: Response): Promise<Customer | any> {
+    const { customer, address } = request.body;
 
     const createCustomer = new CreateCustomerService();
 
@@ -37,8 +37,8 @@ const customerController = {
     }
   },
 
-  async detail(resquest: Request, response: Response): Promise<Customer | any> {
-    const { id } = resquest.params;
+  async detail(request: Request, response: Response): Promise<Customer | any> {
+    const { id } = request.params;
 
     try {
       const customersRepository = getRepository(Customer);
@@ -55,11 +55,11 @@ const customerController = {
   },
 
   async passwordRecovery(
-    resquest: Request,
+    request: Request,
     response: Response,
   ): Promise<Customer | any> {
-    const { id } = resquest.params;
-    const { password } = resquest.body;
+    const { id } = request.params;
+    const { password } = request.body;
 
     const cryptedPassword = await hash(password, 8);
 
@@ -87,9 +87,9 @@ const customerController = {
     }
   },
 
-  async update(resquest: Request, response: Response): Promise<Customer | any> {
-    const { id } = resquest.params;
-    const { fullname, date_of_birth, gender, phone } = resquest.body;
+  async update(request: Request, response: Response): Promise<Customer | any> {
+    const { id } = request.params;
+    const { fullname, date_of_birth, gender, phone } = request.body;
 
     try {
       const result = await getRepository(Customer)
