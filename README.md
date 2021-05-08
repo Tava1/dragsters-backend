@@ -108,7 +108,7 @@ git remote add origin <url-fork>
 
 Após o ```push``` acesse o Github e vá até o ```fork```, você irá se deparar com um aviso possuindo duas opções: ```Pull Request``` e ```Compare```. Clique na opção ```Pull Request```. 
 
-Depois basta se certificar que está tudo certo e ir clicando na opção ```Create Pull Resquest```.
+Depois basta se certificar que está tudo certo e ir clicando na opção ```Create Pull Request```.
 
 Pronto, logo irei analisar.
 

@@ -32,13 +32,13 @@ const userController = {
         updated_at: user.updated_at,
       }));
 
-      const resquestInfo = {
+      const requestInfo = {
         offset,
         limit,
         total,
       };
 
-      return response.json({ usersWithoutPassword, resquestInfo });
+      return response.json({ usersWithoutPassword, requestInfo });
     } catch (error) {
       return response.status(400).json(error);
     }
