@@ -21,14 +21,14 @@ const customerController = {
   },
 
   async create(request: Request, response: Response): Promise<Customer | any> {
-    const { customer, address } = request.body;
+    const { customer, addressInfo } = request.body;
 
     const createCustomer = new CreateCustomerService();
 
     try {
       const customerCreated = await createCustomer.execute({
         customer,
-        address,
+        addressInfo,
       });
 
       return response.status(201).json(customerCreated);
