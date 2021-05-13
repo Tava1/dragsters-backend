@@ -7,6 +7,8 @@ import sessionRouter from './sessions.routes';
 import customersRouter from './customers.routes';
 import billingAddressRouter from './billing-address.routes';
 import deliveryAddressRouter from './delivery-address.routes';
+import customersSessionsRouter from './customers-sessions.routes';
+import orderRouter from './order.routes';
 
 const routes = Router();
 
@@ -17,5 +19,7 @@ routes.use('/sessions', sessionRouter);
 routes.use('/customers', customersRouter);
 routes.use('/customer/billing-address', billingAddressRouter);
 routes.use('/customer/delivery-address', deliveryAddressRouter);
+routes.use('/customers/sessions', customersSessionsRouter);
+routes.use('/order', orderRouter);
 
 export default routes;

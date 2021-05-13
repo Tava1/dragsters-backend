@@ -14,7 +14,7 @@ interface RequestCustomer {
   email: string;
   password: string;
 }
-interface RequestAddress {
+interface RequestAddressInfo {
   zip_code: string;
   address: string;
   number: string;
@@ -27,7 +27,7 @@ interface RequestAddress {
 
 interface Request {
   customer: RequestCustomer;
-  address: RequestAddress;
+  addressInfo: RequestAddressInfo;
 }
 
 interface Response {
@@ -38,7 +38,7 @@ interface Response {
 class CreateCustomerService {
   public async execute({
     customer,
-    address,
+    addressInfo,
   }: Request): Promise<Response | any> {
     const customerRepository = getRepository(Customer);
     const deliveryAddressRepository = getRepository(DeliveryAddress);
@@ -80,27 +80,27 @@ class CreateCustomerService {
 
       const newDeliveryAddress = deliveryAddressRepository.create({
         fullname: customerCreated.fullname,
-        zip_code: address.zip_code,
-        address: address.address,
-        number: address.number,
-        complement: address.complement,
-        neighborhood: address.neighborhood,
-        city: address.city,
-        state: address.state,
-        reference_point: address.reference_point,
+        zip_code: addressInfo.zip_code,
+        address: addressInfo.address,
+        number: addressInfo.number,
+        complement: addressInfo.complement,
+        neighborhood: addressInfo.neighborhood,
+        city: addressInfo.city,
+        state: addressInfo.state,
+        reference_point: addressInfo.reference_point,
         customers_id: customerCreated.id,
       });
 
       const newBillingAdresses = billingAdressesRepository.create({
         fullname: customerCreated.fullname,
-        zip_code: address.zip_code,
-        address: address.address,
-        number: address.number,
-        complement: address.complement,
-        neighborhood: address.neighborhood,
-        city: address.city,
-        state: address.state,
-        reference_point: address.reference_point,
+        zip_code: addressInfo.zip_code,
+        address: addressInfo.address,
+        number: addressInfo.number,
+        complement: addressInfo.complement,
+        neighborhood: addressInfo.neighborhood,
+        city: addressInfo.city,
+        state: addressInfo.state,
+        reference_point: addressInfo.reference_point,
         customers_id: customerCreated.id,
       });
 
