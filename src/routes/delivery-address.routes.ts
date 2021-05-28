@@ -8,7 +8,7 @@ deliveryAddressRouter.get('/:customerID', deliveryAddressController.read);
 
 deliveryAddressRouter.post('/:customerID', deliveryAddressController.create);
 
-deliveryAddressRouter.get('/:id/', deliveryAddressController.detail);
+deliveryAddressRouter.get('/detail/:id/', deliveryAddressController.detail);
 
 deliveryAddressRouter.put('/:id/', deliveryAddressController.update);
 

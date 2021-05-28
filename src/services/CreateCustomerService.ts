@@ -89,6 +89,7 @@ class CreateCustomerService {
         state: addressInfo.state,
         reference_point: addressInfo.reference_point,
         customers_id: customerCreated.id,
+        primary: true,
       });
 
       const newBillingAdresses = billingAdressesRepository.create({
