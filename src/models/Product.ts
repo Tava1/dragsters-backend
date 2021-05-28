@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
+import OrderDetail from './OrderDetail';
 import Showcase from './Showcase';
 
 @Entity('products')
@@ -39,6 +40,9 @@ class Product {
 
   @OneToMany(() => Showcase, showcase => showcase.product)
   showcases: Showcase[];
+
+  @OneToMany(() => OrderDetail, orderDetail => orderDetail.product)
+  order_detail: OrderDetail[];
 
   @CreateDateColumn()
   created_at: Date;

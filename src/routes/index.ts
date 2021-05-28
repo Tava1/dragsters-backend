@@ -9,6 +9,7 @@ import billingAddressRouter from './billing-address.routes';
 import deliveryAddressRouter from './delivery-address.routes';
 import customersSessionsRouter from './customers-sessions.routes';
 import orderRouter from './order.routes';
+import calculateShipping from './calculate-shipping.routes';
 
 const routes = Router();
 
@@ -21,5 +22,7 @@ routes.use('/customer/billing-address', billingAddressRouter);
 routes.use('/customer/delivery-address', deliveryAddressRouter);
 routes.use('/customers/sessions', customersSessionsRouter);
 routes.use('/order', orderRouter);
+routes.use('/order', orderRouter);
+routes.use('/calculate-shipping', calculateShipping);
 
 export default routes;

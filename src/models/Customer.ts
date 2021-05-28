@@ -6,11 +6,11 @@ import {
   UpdateDateColumn,
   OneToMany,
   OneToOne,
-  JoinColumn,
 } from 'typeorm';
 
 import BillingAddress from './BillingAddress';
 import DeliveryAddress from './DeliveryAddress';
+import Order from './Order';
 
 @Entity('customers')
 class Customer {
@@ -46,6 +46,9 @@ class Customer {
 
   @OneToOne(() => BillingAddress, billingAddress => billingAddress.customer)
   billing_address: BillingAddress;
+
+  @OneToMany(() => Order, order => order.customer)
+  order: Order[];
 
   @CreateDateColumn()
   created_at: Date;
