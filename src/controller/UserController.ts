@@ -50,6 +50,7 @@ const userController = {
         message: 'Usuário não possuí autorização para esta tarefa.',
       });
 
+    console.log(request.body);
     const { fullname, email, password, role } = request.body;
 
     const createUser = new CreateUserService();
