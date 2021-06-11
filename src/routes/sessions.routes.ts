@@ -15,6 +15,8 @@ sessionsRouter.post(
   async (request, response) => {
     const { email, password } = request.body;
 
+    console.log(request.body);
+
     const authenticateSystemUserService = new AuthenticateSystemUserService();
 
     const { user, token } = await authenticateSystemUserService.execute({

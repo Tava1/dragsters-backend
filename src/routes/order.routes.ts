@@ -12,4 +12,7 @@ orderRouter.get('/:customerID', orderController.read);
 
 orderRouter.post('/', orderController.create);
 
+// TODO: Update status
+orderRouter.patch('/update-status/:orderID', orderController.updateStatus);
+
 export default orderRouter;

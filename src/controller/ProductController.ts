@@ -116,6 +116,9 @@ const productController = {
       price,
     } = request.body;
 
+    console.log(request.params);
+    console.log(request.body);
+
     const updateProductService = new UpdateProductService();
 
     const productUpdated = await updateProductService.execute({
